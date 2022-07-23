@@ -16,14 +16,26 @@ Terraform uses a plugin based architecture to work with various platforms like A
 The terraform resource file is where we defines resources to be created amd it's file extension is **.tf**. An example is seeen below
 
 ```terraform
-# Start of Resource Block
+<!-- Start of Resource Block -->
 <block_name> "<provider> + _ + <resource>" "<resource_name>" {
   argument_1 = "argument_value_1"
   argument_2 = "argument_value_2"
   argument_3 = "argument_value_3"
 }
-#End of Resource Block
+<!-- End of Resource Block -->
 ```
+Creating an AWS S3 Bucket in Terraform will look like this
+```terraform
+<!-- Start of Resource Block -->
+resource "aws_s3_bucket" "MyS3Bucket" {
+  bucket_prefi = "terra"
+  tags = {
+    team = "data-eng-team"
+    created_by = "temmyzeus"
+}
+<!-- End of Resource Block -->
+```
+
 P.S: **Resource Type** consists of provider followed by the underscore and the resource, hence Resource Type => "provider + _ + resource". 
 **Resource Name** is a logical name to identify a resource and can be be anything.
 **Arguments** are dependent on the **resource type**
