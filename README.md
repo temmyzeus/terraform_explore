@@ -28,7 +28,7 @@ Creating an AWS S3 Bucket in Terraform will look like this
 ```terraform
 <!-- Start of Resource Block -->
 resource "aws_s3_bucket" "MyS3Bucket" {
-  bucket_prefi = "terra"
+  bucket_prefix = "terra"
   tags = {
     team = "data-eng-team"
     created_by = "temmyzeus"
