@@ -88,11 +88,13 @@ resource "aws_s3_bucket" "MyS3Bucket" {
  5. tuple: Can contain values of various types
 
 Examples of more complex nested types
+```hcl
 type: tuple([string, number, bool])
 type: list
 type: object({
   name = string,
   age = number
 })
+```
 
 Note: Important terms are in bold text
