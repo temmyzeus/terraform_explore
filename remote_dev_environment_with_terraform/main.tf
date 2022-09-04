@@ -54,9 +54,9 @@ resource "aws_security_group" "default_sg" {
   description = "Dev Env security group"
   vpc_id      = aws_vpc.dev_env_vpc.id
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
@@ -68,5 +68,26 @@ resource "aws_security_group" "default_sg" {
   }
   tags = {
     "Name" = "dev-end-security-group"
+  }
+}
+
+resource "aws_key_pair" "name" {
+  key_name   = "dev_env_key"
+  public_key = file(var.private_key_path)
+}
+
+resource "aws_instance" "dev_env" {
+  ami                         = data.aws_ami.ec2_server_ami.id
+  instance_type               = "t2.micro"
+  key_name                    = aws_key_pair.name.key_name
+  vpc_security_group_ids      = [aws_security_group.default_sg.id]
+  subnet_id                   = aws_subnet.dev_env_subnet.id
+  user_data                   = file("userdata.tpl")
+  user_data_replace_on_change = false
+  root_block_device {
+    volume_size = 10
+  }
+  tags = {
+    "Name" = "dev-env-server"
   }
 }
